@@ -33,9 +33,13 @@
 | Element Binding     | 특정 객체(행) 단위 바인딩 | `bindElement("/Employees('E001')")`     |
 | Aggregation Binding | 여러 객체(리스트) 바인딩  | `<List items="{/Employees}">...</List>` |
 
+>[!NOTE]
+> - Property Binding : 모델을 UI컨트롤의 프로퍼티에 연결하는 것
+> - Aggregation Binding : 모델 데이터에 따라 자식 컨트롤을 자동으로 생성하는 것
+> - Element Binding : UI 컨트롤과 바인딩하는 것 (컨트롤을 모델의 특정 항목(데이터 경로) 에 연결하는 것)
+> 덕분에 해당 데이터의 속성들을 하위 컨트롤에서도 쉽게 사용할 수 있다.
+> ```<Panel headerText="Company Details" binding="{/company}">```
 ---
-
-**섹션 3: 핵심 포인트**
 
 * `bindElement()` → 한 객체 단위 바인딩
 * `bindAggregation()` → 여러 객체 단위 바인딩
@@ -44,4 +48,31 @@
 * `setProperty()` / `getProperty()` → 모델 데이터 수정/조회
 
 ---
+
+
+## Table vs Panel 바인딩 
+
+- 테이블과 패널의 바인딩 구조가 다르기 때문에 사용하는 방식이 다름
+
+
+| 컨트롤 종류                 | 바인딩 방식      | 사용하는 메서드                                       | 바인딩 대상       | 결과                   |
+| ---------------------- | ----------- | ---------------------------------------------- | ------------ | -------------------- |
+| **Table / List**       | 다수 데이터(컬렉션) | `bindItems()` → `getBinding("items").filter()` | 여러 개의 아이템(행) | 여러 행이 반복 렌더링됨        |
+| **Panel / SimpleForm** | 단일 데이터(객체)  | `bindElement()`                                | 하나의 객체       | 여러 필드가 한 객체의 속성 값 표시 |
+
+
+>[!IMPORTANT]
+>Table은 내부적으로 items Aggregation을 갖고 있음. 즉, 여러 개의 데이터를 목록으로 렌더링하는 구조이다. (filter 적용가능)
+>Panel은 리스트가 아니라 하나의 데이터 객체를 표현하는 컨테이너이다. 즉, items가 아니라 content aggregation을 사용한다. (filter는 배열 데이터를 대상으로 하기 때문에 panel엔 사용이 불가하고, 대신 sPath를 지정한 뒤 bindElement()로 특정 데이터 객체를 직접 연결한다.
+
+
+
+
+
+
+
+
+
+
+
 
